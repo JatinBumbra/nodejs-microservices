@@ -1,0 +1,19 @@
+{
+  "name": "@jbticketing/common",
+  "version": "1.0.3",
+  "author": "JatinBumbra",
+  "license": "MIT",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./build",
+    "build": "yarn clean && npx tsc",
+    "pub": "npm version patch && yarn build && yarn publish"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
