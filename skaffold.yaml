@@ -16,6 +16,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: jatinbumbra/tickets
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: jatinbumbra/client
       context: client
       docker:

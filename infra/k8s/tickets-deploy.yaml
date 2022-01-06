@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-deploy
+spec:
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+      - name: tickets
+        image: jatinbumbra/tickets
+        env:
+          - name: JWT_KEY
+            valueFrom:
+              secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-service
+spec:
+  selector:
+    app: tickets
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
