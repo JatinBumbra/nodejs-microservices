@@ -1,11 +1,13 @@
 import request from 'supertest'
 import { app } from '../../app'
 import mongoose from 'mongoose'
+import { natsWrapper } from '../../nats-wrapper';
 
 const payload = {
     title: 'Ticket',
     price: 20
 }
+
 const genId = () => new mongoose.Types.ObjectId().toHexString()
 
 it('returns 404 for ticket that does not exist',async()=>{
@@ -83,4 +85,22 @@ it('returns 200 on successful update',async()=>{
         .expect(200)
 
     expect(res.body.title).toEqual(updatedTicket.body.title)
+})
+
+it('publishes an event when a new ticket is created', async() => {
+    const cookie = setCookie();
+
+    const createdTicket = await request(app)
+        .post('/api/tickets/')
+        .set('Cookie',cookie)
+        .send(payload)
+        .expect(201)
+
+    await request(app)
+        .put('/api/tickets/'+createdTicket.body.id)
+        .set('Cookie',cookie)
+        .send({...payload,title:'Updated title'})
+        .expect(200)
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
 })
