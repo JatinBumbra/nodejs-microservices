@@ -30,7 +30,7 @@ afterAll(async()=>{
 
 global.setCookie = () => {
     const payload = {
-        id: '1234567890',
+        id: new mongoose.Types.ObjectId().toHexString(),
         email: 'test@test.com'
     }
     const token = jwt.sign(payload,process.env.JWT_KEY!);

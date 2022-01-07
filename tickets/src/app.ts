@@ -7,6 +7,7 @@ import { errorHandler, NotFoundError, currentUser } from '@jbticketing/common';
 import { getTicketsRouter } from './routes';
 import { getTicketRouter } from './routes/show';
 import { createTicketRouter } from './routes/new';
+import { updateTicketRouter } from './routes/update';
 
 const app = express()
 app.set('trust proxy',true)
@@ -21,6 +22,7 @@ app.use(currentUser)
 app.use(getTicketRouter)
 app.use(getTicketsRouter)
 app.use(createTicketRouter)
+app.use(updateTicketRouter)
 
 app.all('*',async() => {
     throw new NotFoundError()

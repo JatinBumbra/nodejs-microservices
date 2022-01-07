@@ -17,7 +17,7 @@ build:
           - src: 'src/**/*.ts'
             dest: .
     - image: jatinbumbra/tickets
-      context: auth
+      context: tickets
       docker:
         dockerfile: Dockerfile
       sync:
