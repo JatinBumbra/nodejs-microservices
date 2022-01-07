@@ -4,6 +4,8 @@ require('express-async-errors');
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@jbticketing/common';
 
+import { getTicketsRouter } from './routes';
+import { getTicketRouter } from './routes/show';
 import { createTicketRouter } from './routes/new';
 
 const app = express()
@@ -16,6 +18,8 @@ app.use(cookieSession({
 }))
 app.use(currentUser)
 
+app.use(getTicketRouter)
+app.use(getTicketsRouter)
 app.use(createTicketRouter)
 
 app.all('*',async() => {
