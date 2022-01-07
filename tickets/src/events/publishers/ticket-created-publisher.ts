@@ -1,4 +1,5 @@
-import { Publisher, TicketCreatedEvent, Subjects } from "@jbticketing/common";
+import {Publisher, Subjects, TicketCreatedEvent} from '@jbticketing/common';
+
 export class TicketCreatedPublisher extends Publisher<TicketCreatedEvent> {
     subject: Subjects.TicketCreated = Subjects.TicketCreated;
 }

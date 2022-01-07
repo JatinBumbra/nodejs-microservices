@@ -13,7 +13,8 @@ client.on('connect',async() => {
     const message = {
         id: '123',
         title: 'concert',
-        price: 20
+        price: 20,
+        userId: '123456789'
     }
 
     try {

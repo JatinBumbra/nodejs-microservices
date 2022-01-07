@@ -1,6 +1,4 @@
-import { Subjects } from './subjects';
-import { TicketCreatedEvent } from './ticket-created-event';
-import { Listener } from "./base-listener";
+import { Listener,TicketCreatedEvent,Subjects } from "@jbticketing/common";
 import { Message } from 'node-nats-streaming';
 
 class TicketCreatedListener extends Listener<TicketCreatedEvent> {
