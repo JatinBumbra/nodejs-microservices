@@ -4,7 +4,7 @@ import { natsWrapper } from '../../nats-wrapper';
 import {OrderStatus} from '../../models/orders'
 import {Ticket} from '../../models/ticket'
 
-it('marks an order as cancelled',async()=>{
+it('marks an order as cancelled and emits an order:cancelled event',async()=>{
     const user = setCookie();
 
     const ticket = Ticket.build({
@@ -32,6 +32,5 @@ it('marks an order as cancelled',async()=>{
         .expect(200)
 
     expect(fetchedOrder.status).toEqual(OrderStatus.Cancelled)
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
 })
-
-it.todo('emits an order cancelled event')

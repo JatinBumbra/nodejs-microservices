@@ -2,12 +2,12 @@ import express, { Request, Response } from 'express'
 import { requireAuth, NotFoundError, NotAuthorizedError } from '@jbticketing/common'
 import { Order, OrderStatus } from '../models/orders';
 import { natsWrapper } from '../nats-wrapper';
-import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
 
 const router = express.Router()
 
 router.delete('/api/orders/:id', requireAuth, async(req:Request,res:Response) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('ticket');
 
     if(!order) throw new NotFoundError();
 
@@ -17,6 +17,14 @@ router.delete('/api/orders/:id', requireAuth, async(req:Request,res:Response) =>
         status: OrderStatus.Cancelled
     });
     await order.save();
+
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+        id: order.id,
+        status: order.status,
+        ticket: {
+            id: order.ticket.id,
+        }
+    })
 
     res.status(204).send(order);
 })

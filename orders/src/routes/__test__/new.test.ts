@@ -39,7 +39,7 @@ it('returns error if ticket is already reserved',async () => {
         .expect(400)
 })
 
-it('reserves a ticket',async () => {
+it('reserves a ticket and emits an order:created event',async () => {
     const ticket = Ticket.build({
         title: 'concert',
         price: 20
@@ -53,6 +53,6 @@ it('reserves a ticket',async () => {
             ticketId: ticket.id
         })
         .expect(201)
-})
 
-it.todo('emits an order created event')
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
+})

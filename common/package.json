@@ -1,6 +1,6 @@
 {
   "name": "@jbticketing/common",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "JatinBumbra",
   "license": "MIT",
   "main": "./build/index.js",
