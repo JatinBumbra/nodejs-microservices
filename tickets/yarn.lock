@@ -302,10 +302,10 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
-"@jbticketing/common@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@jbticketing/common/-/common-1.0.7.tgz#d035016e0bca1c7f5cc4486a9b2f69636c7e7ab7"
-  integrity sha512-ajFFY7Ekke/g1mgV8faVmo0+0QWtOrj0iqsncpmh3f3U2V+rUidG7TjHf7sE9O4ZCnGXuECpWdnQ/VpDl/3KtA==
+"@jbticketing/common@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@jbticketing/common/-/common-1.0.10.tgz#851b728eae0d77d5689ab216d516cc9578ffc322"
+  integrity sha512-fdGB51pxVb2PUz9dfOze6QIx9KagcDIMem6C6kA+jwCmEN7X92pI7oz8S7vpVosx+n4NAUC5nTuRpYvReEAoTg==
   dependencies:
     "@types/cookie-session" "^2.0.44"
     "@types/express" "^4.17.13"
