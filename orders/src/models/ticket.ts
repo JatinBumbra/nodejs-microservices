@@ -3,6 +3,7 @@ import { Order,OrderStatus } from './orders'
 
 // Describes the properties required to create a new Ticket
 interface TicketAttrs {
+    id: string,
     title: string,
     price: number,
 }
@@ -38,7 +39,7 @@ const TicketSchema = new mongoose.Schema({
     }
 })
 
-TicketSchema.statics.build = (attrs:TicketAttrs) => new Ticket(attrs)
+TicketSchema.statics.build = (attrs:TicketAttrs) => new Ticket({...attrs,_id:attrs.id})
 
 TicketSchema.methods.isReserved = async function() {
     // Run a query to look at all orders. Find an order where the ticker
