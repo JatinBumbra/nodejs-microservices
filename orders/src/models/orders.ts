@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import {OrderStatus} from '@jbticketing/common'
 import { TicketDoc } from './ticket';
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 // Describes the properties required to create a new Order
 interface OrderAttrs {
@@ -21,6 +22,7 @@ interface OrderDoc extends mongoose.Document {
     status: OrderStatus,
     expiresAt: Date,
     ticket: TicketDoc,
+    version: number
 }
 
 const OrderSchema = new mongoose.Schema({
@@ -49,6 +51,9 @@ const OrderSchema = new mongoose.Schema({
         }
     }
 })
+
+OrderSchema.set('versionKey',"version")
+OrderSchema.plugin(updateIfCurrentPlugin)
 
 OrderSchema.statics.build = (attrs:OrderAttrs) => new Order(attrs)
 

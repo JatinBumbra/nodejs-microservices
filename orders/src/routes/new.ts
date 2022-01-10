@@ -43,7 +43,7 @@ router.post('/api/orders',
 
         new OrderCreatedPublisher(natsWrapper.client).publish({
             id: order.id,
-            version: 1,
+            version: order.version,
             expiresAt: order.expiresAt.toISOString(),
             userId: req.currentUser!.id,
             ticket: {

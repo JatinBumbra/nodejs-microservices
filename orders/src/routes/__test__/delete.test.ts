@@ -3,11 +3,13 @@ import { app } from '../../app'
 import { natsWrapper } from '../../nats-wrapper';
 import {OrderStatus} from '../../models/orders'
 import {Ticket} from '../../models/ticket'
+import mongoose from 'mongoose'
 
 it('marks an order as cancelled and emits an order:cancelled event',async()=>{
     const user = setCookie();
 
     const ticket = Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         title: 'concert',
         price: 20
     })
