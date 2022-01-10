@@ -2,6 +2,7 @@ import request from 'supertest'
 import { app } from '../../app'
 import mongoose from 'mongoose'
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
 
 const payload = {
     title: 'Ticket',
@@ -103,4 +104,24 @@ it('publishes an event when a new ticket is created', async() => {
         .expect(200)
 
     expect(natsWrapper.client.publish).toHaveBeenCalled();
+})
+
+it('rejects updates if ticket is reserved',async()=>{
+    const cookie = setCookie();
+
+    const createdTicket = await request(app)
+        .post('/api/tickets/')
+        .set('Cookie',cookie)
+        .send(payload)
+        .expect(201)
+
+    const ticket = await Ticket.findById(createdTicket.body.id);
+    ticket?.set({orderId:new mongoose.Types.ObjectId().toHexString()});
+    await ticket?.save();
+
+    await request(app)
+        .put('/api/tickets/'+createdTicket.body.id)
+        .set('Cookie',cookie)
+        .send({...payload,title:'Updated title'})
+        .expect(400)
 })

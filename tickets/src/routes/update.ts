@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import { requireAuth, validateRequest, NotFoundError, NotAuthorizedError } from '@jbticketing/common'
+import { requireAuth, validateRequest, NotFoundError, NotAuthorizedError, BadRequestError } from '@jbticketing/common'
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import { natsWrapper } from '../nats-wrapper';
@@ -18,6 +18,8 @@ router.put('/api/tickets/:id',
         const ticket = await Ticket.findById(req.params.id);
 
         if(!ticket) throw new NotFoundError();
+
+        if(ticket.orderId) throw new BadRequestError('Cannot edit a reserved ticket')
 
         if(ticket.userId !== req.currentUser!.id) throw new NotAuthorizedError();
 
